@@ -1,6 +1,8 @@
+
 import pygame
 import sys
 import random
+import os
 
 # Game settings
 WIDTH, HEIGHT = 1600, 850
@@ -28,13 +30,16 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Jump and Run")
 clock = pygame.time.Clock()
 
+def asset_path(filename):
+    return os.path.join(os.path.dirname(__file__), filename)
+
 # Player setup
 player_size = (40, 60)
 player = pygame.Rect(100, HEIGHT - 100, *player_size)
 player_vel_y = 0
 on_ground = False
 
-player_img = pygame.image.load("player.png").convert_alpha()  # Make sure player.png is in the same folder
+player_img = pygame.image.load("JumpNRun/player.png").convert_alpha()
 player_img = pygame.transform.scale(player_img, player_size)
 
 # Ground setup
@@ -86,14 +91,14 @@ def check_collision(rect, rect_list):
             return r
     return None
 
-coin_img = pygame.image.load("coin.png").convert_alpha()
+coin_img = pygame.image.load(asset_path("coin.png")).convert_alpha()
 coin_img = pygame.transform.scale(coin_img, (coin_width, coin_height))
 
 roll_img_files = [
     "roll1.png", "roll2.png", "roll3.png", "roll4.png", "roll5.png",
     "roll6.png", "roll7.png", "roll8.png", "roll9.png"]
-roll_imgs = [pygame.transform.scale(pygame.image.load(f).convert_alpha(), player_size) for f in roll_img_files]
-stand_img = pygame.transform.scale(pygame.image.load("player.png").convert_alpha(), player_size)
+roll_imgs = [pygame.transform.scale(pygame.image.load(asset_path(f)).convert_alpha(), player_size) for f in roll_img_files]
+stand_img = pygame.transform.scale(pygame.image.load(asset_path("player.png")).convert_alpha(), player_size)
 ROLL_ANIMATION_SPEED = 4
 
 def main():
